@@ -1,0 +1,70 @@
+<h1>Car Rental</h1>
+
+<div class="col-md-12" id=banner>
+  <img src="http://i62.tinypic.com/24xi4rc.jpg">
+<div>
+
+
+<div class="row">
+<div class="col-md-5" id=top>
+<h2>Cars at checkout</h2>
+
+<ul>
+  {{#each cars}}
+    {{#unless this.rented}}
+    <div class="box">
+        {{this.model}}
+
+
+        <form action="cars/update/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="rented" value="true">
+          <button type="submit">rent it</button>
+        </form>
+
+
+        {{> cars/delete-car}}
+      </div>
+    {{/unless}}
+  {{/each}}
+</ul>
+</div>
+
+
+<div class="col-md-5" id=right>
+<h2>Cars rented</h2>
+
+<ul>
+  {{#each cars}}
+    {{#if this.rented}}
+      <div class="box">
+        {{this.model}}
+
+        <form action="cars/update/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="rented" value="false">
+          <button type="submit">return it</button>
+        </form>
+
+        {{> cars/delete-car}}
+    </div>
+    {{/if}}
+  {{/each}}
+</ul>
+</div>
+
+</div>
+
+
+<div class="add">
+<h2>Add car to checkout</h2>
+<form class="create-update-form" action="cars/create" method="POST">
+
+  <div class="form-group">
+    <label for="ca">Car Name:</label>
+    <input type="text" id="ca" name="model">
+  </div>
+
+
+
+  <button type="submit">checkout</button>
+</form>
+</div>
